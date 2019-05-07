@@ -7,19 +7,16 @@
  * A visible LED can be connected to STATUS_PIN to provide status.
  *
  * The logic is:
- * If the button is pressed, send the IR code.
- * If an IR code is received, record it.
+ *  If an IR code is received, record it. send the IR code.
  *
- * Version 0.11 September, 2009
- * Copyright 2009 Ken Shirriff
- * http://arcfn.com
  */
 
 #include <IRremote.h>
 
-int RECV_PIN = 7;
-int BUTTON_PIN = 12;
+int RECV_PIN = 7; // pin of ir receiver 
+int BUTTON_PIN = 12; //
 int STATUS_PIN = 13;
+int lastButtonState;
 
 IRrecv irrecv(RECV_PIN);
 IRsend irsend;
@@ -73,26 +70,21 @@ void sendCode(int repeat) {
     Serial.println("Sent raw");
 }
 
-int lastButtonState;
 
 void loop() {
-
   int buttonState = digitalRead(BUTTON_PIN);
-  // Wait for receving sin
+  // Wait for receving signal
   if (irrecv.decode(&results)) {
     digitalWrite(STATUS_PIN, HIGH);
     storeCode(&results);
-    irrecv.resume(); // resume receiver
+    irrecv.resume(); 
     digitalWrite(STATUS_PIN, LOW);
-    delay(50);
-    
-    Serial.println("Pressed, sending");
+    delay(30); // Wait between receving and sending 
     digitalWrite(STATUS_PIN, HIGH);
-    sendCode(lastButtonState == buttonState);
+    sendCode(lastButtonState == buttonState); // relay signal to ir lights
     digitalWrite(STATUS_PIN, LOW);
-    
-    delay(50); // Wait a bit between retransmissions
-     Serial.println("Released");
+    delay(30); // Wait between retransmissions
+    Serial.println("Released");
     irrecv.enableIRIn(); // Re-enable receiver
   }
   lastButtonState = buttonState;
