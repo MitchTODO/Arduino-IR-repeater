@@ -70,7 +70,7 @@ delay(30); // Wait between retransmissions
 
 You could use this <a href = "https://www.circuito.io/app?components=512,9349,10266,11021"> wiring diagram </a>.
 
-Hypothetically all parts except for the Arduino can be found in a broken tv and remote. The IR receiver is found along the bottom of the tv and IR LED can be found in the tip of the remote controller.
+Hypothetically all parts except for the Arduino IR repeater can be found in a broken tv and remote. The IR receiver is found along the bottom of the tv and IR LED can be found in the tip of the remote controller.
 
 ## Quick code setup
 
